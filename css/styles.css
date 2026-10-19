@@ -1,0 +1,83 @@
+/* Estilos propios del portafolio (el resto del diseño usa clases de Tailwind en index.html) */
+
+/* ---------- Paletas ---------- */
+/* Modo claro: fondo crema, verde profundo */
+:root {
+  --bg: 246 244 237;
+  --surface: 255 255 252;
+  --line: 222 216 201;
+  --fg: 28 38 33;
+  --muted: 92 106 98;
+  --accent: 4 120 87;
+  --on-accent: 255 255 255;
+  color-scheme: light;
+}
+/* Modo oscuro: negro verdoso, verde menta */
+.dark {
+  --bg: 10 13 12;
+  --surface: 18 23 21;
+  --line: 38 48 44;
+  --fg: 222 232 226;
+  --muted: 140 158 150;
+  --accent: 110 231 183;
+  --on-accent: 6 20 14;
+  color-scheme: dark;
+}
+
+/* El atributo hidden siempre oculta, aunque el elemento tenga clases como inline-flex */
+[hidden] { display: none !important; }
+
+/* Compensa la barra de navegación fija al saltar a una sección */
+section[id] { scroll-margin-top: 5rem; }
+
+::selection { background: rgb(var(--accent) / .3); }
+
+/* Cursor parpadeante */
+.cursor {
+  display: inline-block; width: .5em; height: .9em; margin-left: .1em; vertical-align: baseline;
+  background: rgb(var(--accent)); animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Brillo verde de los títulos en modo oscuro */
+.dark .glow { text-shadow: 0 0 18px rgb(var(--accent) / .3); }
+
+/* Fondo de cuadrícula del inicio */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(var(--accent) / .07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--accent) / .07) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  mask-image: radial-gradient(ellipse at center, black 35%, transparent 75%);
+}
+
+/* Fondo del avatar: brillo verde + cuadrícula, igual que el inicio */
+.avatar-bg {
+  background-image:
+    radial-gradient(circle at 50% 40%, rgb(var(--accent) / .55), rgb(var(--accent) / .12) 70%),
+    linear-gradient(to right, rgb(var(--accent) / .12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--accent) / .12) 1px, transparent 1px);
+  background-size: auto, 2rem 2rem, 2rem 2rem;
+}
+
+/* Logos muy oscuros: en modo oscuro se aclaran sin perder su color */
+.dark .logo-dark-fix { filter: invert(1) hue-rotate(180deg); }
+
+/* Menú: marca la sección en la que está el visitante */
+.nav-link:not(.nav-cta)[aria-current="true"] { color: rgb(var(--accent)); font-weight: 600; }
+.desk-link { position: relative; }
+.desk-link[aria-current="true"]::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px;
+  border-radius: 2px; background: rgb(var(--accent));
+}
+.nav-cta[aria-current="true"] { box-shadow: 0 0 0 3px rgb(var(--accent) / .35); }
+#mobile-menu .nav-link[aria-current="true"] { background: rgb(var(--surface)); }
+
+/* Animación al hacer scroll: solo si hay JS y el usuario no pidió reducir movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .js .reveal.is-visible { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+}
